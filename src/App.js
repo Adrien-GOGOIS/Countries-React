@@ -4,6 +4,7 @@ import React from "react";
 
 // COMPONENTS
 import Button from "./components/Button";
+import Card from "./components/Card";
 
 class App extends React.Component {
   constructor() {
@@ -56,11 +57,13 @@ class App extends React.Component {
           <Button onClick={() => this.getCountry("brazil")}>Brazil</Button>
           <Button onClick={() => this.getCountry("croatia")}>Croatia</Button>
         </div>
-        <p>{this.state.name}</p>
-        <p>{this.state.capital}</p>
-        <p>{this.state.flag}</p>
-        <p>{this.state.population}</p>
-        <p>{this.state.region}</p>
+        <Card
+          displayFlag={this.state.flag}
+          countryName={this.state.name}
+          capitalName={this.state.capital}
+          regionName={this.state.region}
+          populationNum={this.state.population}
+        />
       </div>
     );
   }
