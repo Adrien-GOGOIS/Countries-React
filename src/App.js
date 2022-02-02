@@ -37,18 +37,32 @@ class App extends React.Component {
       });
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    fetch(`https://restcountries.com/v3.1/name/${this.state.selectedCountry}`)
-      .then((res) => res.json())
-      .then((res) => {
-        this.setState({
-          name: res[0].name.common,
-          capital: res[0].capital,
-          flag: res[0].flag,
-          population: res[0].population,
-          region: res[0].region,
+  componentDidUpdate(_prevProps, prevState) {
+    if (prevState.selectedCountry !== this.state.selectedCountry) {
+      // fetch(`https://restcountries.com/v3.1/name/${this.state.selectedCountry}`)
+      //   .then((res) => res.json())
+      //   .then((res) => {
+      //     this.setState({
+      //       name: res[0].name.common,
+      //       capital: res[0].capital,
+      //       flag: res[0].flag,
+      //       population: res[0].population,
+      //       region: res[0].region,
+      //     });
+      //   });
+
+      fetch(`https://restcountries.com/v3.1/name/${this.state.selectedCountry}`)
+        .then((res) => res.json())
+        .then((res) => {
+          this.setState({
+            name: res[0].name.common,
+            capital: res[0].capital,
+            flag: res[0].flag,
+            population: res[0].population,
+            region: res[0].region,
+          });
         });
-      });
+    }
   }
 
   getCountry(country) {
@@ -58,29 +72,21 @@ class App extends React.Component {
   }
 
   onInputChange(e) {
-    fetch(`https://restcountries.com/v3.1/name/${e.target.value}`)
-      .then((res) => res.json())
-      .then((res) => {
-        this.setState({
-          name: res[0].name.common,
-          capital: res[0].capital,
-          flag: res[0].flag,
-          population: res[0].population,
-          region: res[0].region,
-        });
-      });
+    this.setState({
+      selectedCountry: e.target.value,
+    });
   }
 
   render() {
     return (
       <div>
         <h1>Country Selector</h1>
-        <div>
+        {/* <div>
           <Button onClick={() => this.getCountry("france")}>France</Button>
           <Button onClick={() => this.getCountry("brazil")}>Brazil</Button>
           <Button onClick={() => this.getCountry("croatia")}>Croatia</Button>
-        </div>
-        {/* <Search onChange={() => this.onInputChange(e)} /> */}
+        </div> */}
+        <Search onChange={this.onInputChange} />
         <Card
           displayFlag={this.state.flag}
           countryName={this.state.name}
