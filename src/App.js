@@ -37,8 +37,8 @@ class App extends React.Component {
       });
   }
 
-  getCountry(country) {
-    fetch(`https://restcountries.com/v3.1/name/${country}`)
+  componentDidUpdate(prevProps, prevState) {
+    fetch(`https://restcountries.com/v3.1/name/${this.state.selectedCountry}`)
       .then((res) => res.json())
       .then((res) => {
         this.setState({
@@ -49,6 +49,12 @@ class App extends React.Component {
           region: res[0].region,
         });
       });
+  }
+
+  getCountry(country) {
+    this.setState({
+      selectedCountry: country,
+    });
   }
 
   onInputChange(e) {
